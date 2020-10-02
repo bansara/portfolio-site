@@ -1,6 +1,13 @@
 .portfolio {
     padding: 1rem;
     display: flex;
+    height: 100vh;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+}
+.dark {
+    background-color: var(--veryDark);
 }
 .portfolio h2 {
     text-transform: uppercase;
@@ -14,15 +21,17 @@
 }
 .portfolio p {
     color: var(--blueGray);
+    margin: 2rem 0;
 }
 .info a, .info a:visited {
     color: var(--greenDk);
     background: none;
     text-decoration: underline;
 }
-.info{
-    padding-right: 2rem;
+.info, .video {
+    padding: 0 2rem;
     width: 50%;
+    box-sizing: border-box;
 }
 .info a:hover {
     color: var(--green);
@@ -39,18 +48,71 @@
     width: 560px;
     height: 315px;
 }
-
-@media screen and (max-width: 768px) {
+.portfolio .next {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: calc(100vw - 4em);
+    bottom: 2rem;
+}
+@media screen and (max-width: 1024px) {
     .portfolio {
-        margin-left: 0;
         flex-direction: column;
+        height: auto;
+        margin-bottom: 2em;
+    }
+    .portfolio .next {
+        display: none;
+    }
+    .info, .video {
+        width: 100%;
+        padding: 0;
+        height: auto;
+    }
+    .info {
+        order: -1;
     }
     .portfolio iframe {
         max-width: 560px;
         max-height: 315px;
     }
+    .video {
+        margin: 1em 0;
+    }
+}
+@media screen and (max-width: 768px) {
+    .portfolio {
+        margin-left: 0;
+        height: auto;
+    }
+    .portfolio h2 {
+        font-size: 1.75em;
+    }
+    .portfolio h4 {
+        font-size: 1.25em;
+        margin: 1rem 0;
+    }
+    .portfolio p {
+        margin: 1rem 0;
+    }
+    .portfolio iframe {
+        max-width: 400px;
+        max-height: 225px;
+    }
+    .icon-link {
+        margin: 1rem 2rem 1rem 0;
+    }
+}
+
+@media screen and (max-width: 374px) {
+    .portfolio {
+        height: auto;
+    }
+    .portfolio iframe {
+        max-width: 300px;
+        max-height: 168px;
+    }
     .info, .video {
-        width: 100%;
-        padding: 0;
+        height: auto;
     }
 }

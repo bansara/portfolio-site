@@ -1,14 +1,15 @@
-:root {
-    --transition: 250ms;
-}
-
 .nav {
+    --transition: 250ms;
     color: var(--blueGray);
     background-color: var(--dark);
     height: 100vh;
     width: 4em;
     position: fixed;
     top: 0;
+    /* uncomment to put icons in the middle */
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center; */
     transition: width var(--transition) ease;
     z-index: 100;
 }

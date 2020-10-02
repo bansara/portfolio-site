@@ -1,12 +1,22 @@
 import React from 'react';
-import { pedalboard } from './projectInfo';
-import PortfolioLeft from './portfolioLeft';
+import { projects } from './projectInfo';
+import PortfolioProject from './portfolioProject';
 import './portfolio.css';
 
 const Projects: React.FC = () => {
     return (
         <div>
-            <PortfolioLeft project={pedalboard} />
+            {
+                projects.map((project, i) => (
+                    <PortfolioProject 
+                        project={project} 
+                        hasNext={i < projects.length - 1}
+                        variant={i % 2 === 0 ? 'left' : 'right'}
+                        key={project.headline} 
+                    />
+
+                ))
+            }
         </div>
     )
 }
