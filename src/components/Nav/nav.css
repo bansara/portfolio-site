@@ -1,0 +1,88 @@
+:root {
+    --transition: 250ms;
+}
+
+.nav {
+    color: var(--blueGray);
+    background-color: var(--dark);
+    height: 100vh;
+    width: 4em;
+    position: fixed;
+    top: 0;
+    transition: width var(--transition) ease;
+    z-index: 100;
+}
+.navbar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.nav-item {
+    width: 100%;
+}
+.nav-link {
+    display: flex;
+    align-items: center;
+    height: 4em;
+}
+a, a:visited {
+    color: var(--blueGray);
+    text-decoration: none;
+    transition: all var(--transition) ease;
+    text-transform: uppercase;
+}
+.link-text {
+    display: none;
+    margin-left: 1em;
+    opacity: 0;
+    transition: opacity var(--transition) ease-in;
+}
+.nav-link svg {
+    min-width: 2rem;
+    margin: 0 1rem;
+    font-size: 2em;
+}
+.center {
+    display: flex;
+    align-items: center;
+}
+a:hover {
+    background-color: var(--veryDark);
+    color: var(--green);
+}
+a:active {
+    color: var(--white);
+}
+.nav:hover {
+    width: 16rem;
+}
+.nav:hover .link-text {
+    display: block;
+    opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+    .nav {
+        flex-direction: row;
+        width: 100vw;
+        height: 4em;
+        top: calc(100vh - 4em);
+        bottom: 0;
+    }
+    .nav:hover {
+        width: 100vw;
+    }
+    .navbar-nav {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .nav-item {
+        width: 4rem; 
+    }
+    .link-text, .nav:hover .link-text {
+        display: none;
+    }
+}

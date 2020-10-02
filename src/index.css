@@ -1,6 +1,20 @@
+:root {
+  --veryDark: rgb(12,14,19);
+  --dark: rgba(25,28,39,1);
+  --bg: rgb(36,41,56);
+  --white: rgb(228,240,251);
+  --blue: rgb(173,215,255);
+  --blueGray: rgb(115,144,170);
+  --green: rgb(39,232,167);
+  --greenDk: rgb(50,174,133);
+  --teal: rgb(83,190,178);
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  background-color: var(--bg);
+  color: var(--white);
+  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -10,4 +24,23 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+input[type="color"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="month"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="time"],
+input[type="url"],
+input[type="week"],
+select:focus,
+textarea {
+  font-size: 16px;
 }

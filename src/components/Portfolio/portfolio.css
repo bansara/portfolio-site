@@ -1,0 +1,55 @@
+.portfolio {
+    padding: 1rem;
+    display: flex;
+}
+.portfolio h2 {
+    text-transform: uppercase;
+    font-size: 2.5rem;
+    margin-top: 1rem;
+}
+.portfolio h4 {
+    font-size: 1.5rem;
+    color: var(--blue);
+}
+.portfolio p {
+    color: var(--blueGray);
+}
+.info a, .info a:visited {
+    color: var(--greenDk);
+    background: none;
+    text-decoration: underline;
+}
+.info{
+    padding-right: 2rem;
+    width: 50%;
+}
+.info a:hover {
+    color: var(--green);
+}
+.icon-link {
+    margin-right: 2rem;
+}
+.video {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+}
+.portfolio iframe {
+    width: 560px;
+    height: 315px;
+}
+
+@media screen and (max-width: 768px) {
+    .portfolio {
+        margin-left: 0;
+        flex-direction: column;
+    }
+    .portfolio iframe {
+        max-width: 560px;
+        max-height: 315px;
+    }
+    .info, .video {
+        width: 100%;
+        padding: 0;
+    }
+}
