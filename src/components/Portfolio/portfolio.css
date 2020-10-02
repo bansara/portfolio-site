@@ -5,10 +5,11 @@
 .portfolio h2 {
     text-transform: uppercase;
     font-size: 2.5rem;
-    margin-top: 1rem;
+    margin: 0 0 1rem 0;
 }
 .portfolio h4 {
     font-size: 1.5rem;
+    margin: 2rem 0;
     color: var(--blue);
 }
 .portfolio p {
@@ -27,7 +28,7 @@
     color: var(--green);
 }
 .icon-link {
-    margin-right: 2rem;
+    margin: 2rem 2rem 2rem 0;
 }
 .video {
     display: flex;

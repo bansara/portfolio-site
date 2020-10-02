@@ -4,7 +4,7 @@ interface ProjectInfo {
     description: string;
     deployLink: string;
     githubLink: string;
-    youtubeLink: string;
+    youtubeLink?: string;
 }
 
 export default ProjectInfo;

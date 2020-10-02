@@ -43,13 +43,16 @@ const PortfolioLeft: React.FC<Props> = (props: Props) => {
             <p>{description}</p>
             </div>
             <div className="video">
-                <iframe 
-                    src={youtubeLink} 
-                    title={headline} 
-                    frameBorder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowFullScreen 
-                />
+                {
+                    youtubeLink &&
+                    <iframe 
+                        src={youtubeLink} 
+                        title={headline} 
+                        frameBorder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowFullScreen 
+                    />
+                }
             </div>
         </div>
     )
