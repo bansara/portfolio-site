@@ -6,7 +6,7 @@ import Projects from './components/Portfolio/projects';
 import About from './components/About/about';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './utils/theme';
-import './app.css'
+import './App.css'
 
 function App() {
   return (
