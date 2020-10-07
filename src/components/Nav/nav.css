@@ -6,10 +6,10 @@
     width: 4em;
     position: fixed;
     top: 0;
-    /* uncomment to put icons in the middle */
-    /* display: flex;
+    box-sizing: border-box;
+    display: flex;
     flex-direction: column;
-    justify-content: center; */
+    justify-content: center;
     transition: width var(--transition) ease;
     z-index: 100;
 }
@@ -28,6 +28,9 @@
     display: flex;
     align-items: center;
     height: 4em;
+}
+.active-page {
+    border-right: 2px solid var(--green);
 }
 a, a:visited {
     color: var(--blueGray);

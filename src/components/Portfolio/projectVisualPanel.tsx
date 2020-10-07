@@ -10,7 +10,7 @@ const ProjectVisualPanel: React.FC<Props> = (props: Props) => {
         hasVideo,
         headline,
         youtubeLink,
-        imgURL,
+        img,
     }} = props;
     return (
         <div className="video">
@@ -24,7 +24,7 @@ const ProjectVisualPanel: React.FC<Props> = (props: Props) => {
                         allowFullScreen 
                     />
                     :
-                    <img src={imgURL} alt={`${headline} demo`} />
+                    <img src={img} alt={`${headline} demo`} />
                 }
             </div>
     )

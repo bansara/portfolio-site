@@ -9,6 +9,9 @@
   --greenDk: rgb(50,174,133);
   --teal: rgb(83,190,178);
 }
+#root {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;

@@ -1,4 +1,5 @@
 import { ProjectInfo } from './projectInfoInterface';
+import grace from './graceShopper.png';
 
 const pedalboard: ProjectInfo = {
     headline: 'Pedalboard JS',
@@ -17,7 +18,17 @@ const skrap: ProjectInfo = {
     deployLink: 'https://skraplitter.herokuapp.com',
     githubLink: 'https://github.com/SkrapLitter/capstone',
     hasVideo: true,
-    youtubeLink: 'https://www.youtube.com/embed/d0tU18Ybcvk',
+    youtubeLink: 'https://www.youtube.com/embed/3vS1InObKGM',
 }
 
-export const projects = [pedalboard, skrap,];
+const graceShopper: ProjectInfo = {
+    headline: 'Grace\'s Hopper',
+    technologies: ['React', 'Redux', 'Express', 'Sequelize', 'PostgreSQL'],
+    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, error eaque! Modi est impedit id optio consequuntur laudantium sit, illo minima quis molestias laborum fugiat eaque quos animi vel doloremque.',
+    deployLink: 'https://graces-hopper.herokuapp.com/',
+    githubLink: 'https://github.com/Rebel-Alliance-2004/grace-shopper',
+    hasVideo: false,
+    img: grace,
+}
+
+export const projects = [pedalboard, skrap, graceShopper];

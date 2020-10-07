@@ -44,6 +44,9 @@
     justify-content: center;
     width: 50%;
 }
+.video img {
+    max-width: 560px;
+}
 .portfolio iframe {
     width: 560px;
     height: 315px;
@@ -55,13 +58,21 @@
     width: calc(100vw - 4em);
     bottom: 2rem;
 }
+.portfolio .prev {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: calc(100vw - 4em);
+    top: 2rem;
+}
 @media screen and (max-width: 1024px) {
     .portfolio {
         flex-direction: column;
         height: auto;
         margin-bottom: 2em;
     }
-    .portfolio .next {
+    .portfolio .next, 
+    .portfolio .prev {
         display: none;
     }
     .info, .video {
@@ -98,6 +109,9 @@
     .portfolio iframe {
         max-width: 400px;
         max-height: 225px;
+    }
+    .video img {
+        max-width: 400px;
     }
     .icon-link {
         margin: 1rem 2rem 1rem 0;

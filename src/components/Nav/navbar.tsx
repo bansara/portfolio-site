@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import ComputerIcon from '@material-ui/icons/Computer';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
@@ -7,32 +8,34 @@ import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import './nav.css';
 
 const Navbar: React.FC = () => {
+    let { pathname } = useLocation();
+
     return (
         <nav className='nav'>
             <ul className="navbar-nav">
                 <li className="nav-item">
-                    <a href="#" className="nav-link">
+                    <Link to="/about" className={pathname === '/about' ? 'nav-link active-page' : 'nav-link'}>
                         <PersonOutlineIcon />
                         <span className='link-text'>About</span>
-                    </a>
+                    </Link>
                 </li>
                 <li className="nav-item">
-                    <a href="#" className="nav-link">
+                    <Link to="/projects" className={pathname === '/projects' ? 'nav-link active-page' : 'nav-link'}>
                         <ComputerIcon />
                         <span className='link-text'>Projects</span>
-                    </a>
+                    </Link>
                 </li>
                 <li className="nav-item">
-                    <a href="#" className="nav-link">
+                    <Link to="/music" className={pathname === '/music' ? 'nav-link active-page' : 'nav-link'}>
                         <MusicNoteIcon />
                         <span className='link-text'>Music</span>
-                    </a>
+                    </Link>
                 </li>
                 <li className="nav-item">
-                    <a href="#" className="nav-link">
+                    <Link to="/contact" className={pathname === '/contact' ? 'nav-link active-page' : 'nav-link'}>
                         <MailOutlineIcon />
                         <span className='link-text'>Contact</span>
-                    </a>
+                    </Link>
                 </li>
             </ul>
         </nav>

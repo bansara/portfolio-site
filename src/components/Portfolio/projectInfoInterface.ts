@@ -6,7 +6,7 @@ export interface ProjectInfo {
     githubLink: string;
     hasVideo: boolean;
     youtubeLink?: string;
-    imgURL?: string;
+    img?: string;
 }
 
 export interface Info {
@@ -21,5 +21,5 @@ export interface VisualInfo {
     headline: string;
     hasVideo: boolean;
     youtubeLink?: string;
-    imgURL?: string;
+    img?: string;
 }

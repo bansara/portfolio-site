@@ -11,6 +11,7 @@ const Projects: React.FC = () => {
                     <PortfolioProject 
                         project={project} 
                         hasNext={i < projects.length - 1}
+                        hasPrev={i > 0}
                         variant={i % 2 === 0 ? 'left' : 'right'}
                         key={project.headline} 
                     />

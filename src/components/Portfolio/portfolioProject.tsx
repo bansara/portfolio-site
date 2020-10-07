@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Button from '@material-ui/core/Button';
 import { ProjectInfo, Info, VisualInfo } from './projectInfoInterface';
 import ProjectInfoPanel from './projectInfoPanel';
@@ -8,6 +9,7 @@ import ProjectVisualPanel from './projectVisualPanel';
 interface Props {
     project: ProjectInfo;
     hasNext: boolean;
+    hasPrev: boolean;
     variant: 'right' | 'left';
 }
 
@@ -21,9 +23,10 @@ const PortfolioProject: React.FC<Props> = (props: Props) => {
             githubLink,
             hasVideo,
             youtubeLink,
-            imgURL,
+            img,
             },
         hasNext, 
+        hasPrev,
         variant
     } = props;
 
@@ -39,16 +42,28 @@ const PortfolioProject: React.FC<Props> = (props: Props) => {
         headline,
         hasVideo,
         youtubeLink,
-        imgURL,
+        img,
     }
+
+    const div = useRef<HTMLDivElement>(null);
     
     const handleNext = (): void => {
-        const div: HTMLElement | null = document.getElementById(headline.split('')[0]);
-        if(div){
+        if(div.current !== null){
             const scrollHeight: number = window.scrollY;
-            const divInfo: DOMRect = div.getBoundingClientRect();
+            const divInfo: DOMRect = div.current.getBoundingClientRect();
             window.scroll({
                 top: scrollHeight + divInfo.height + divInfo.top,
+                left: 0,
+                behavior: 'smooth'
+            });
+        }
+    }
+    const handlePrev = (): void => {
+        if(div.current !== null){
+            const scrollHeight: number = window.scrollY;
+            const divInfo: DOMRect = div.current.getBoundingClientRect();
+            window.scroll({
+                top: scrollHeight - divInfo.height + divInfo.top,
                 left: 0,
                 behavior: 'smooth'
             });
@@ -58,7 +73,7 @@ const PortfolioProject: React.FC<Props> = (props: Props) => {
     return (
         <div 
             className='portfolio' 
-            id={headline.split('')[0]}
+            ref={div}
         >
             {
                 variant === 'left' ? 
@@ -71,6 +86,19 @@ const PortfolioProject: React.FC<Props> = (props: Props) => {
                         <ProjectVisualPanel visualInfo={visualInfo} />
                         <ProjectInfoPanel info={info} />
                     </>
+            }
+            {
+                hasPrev &&
+                <div className='prev'>
+                    <Button
+                        onClick={handlePrev}
+                        variant='outlined'
+                        color='primary'
+                    >
+                        prev&nbsp;
+                        <ExpandLessIcon />
+                    </Button>
+                </div>
             }
             {
                 hasNext &&
