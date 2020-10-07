@@ -28,6 +28,7 @@
     display: flex;
     align-items: center;
     height: 4em;
+    box-sizing: border-box;
 }
 .active-page {
     border-right: 2px solid var(--green);
@@ -70,11 +71,14 @@ a:active {
 
 @media screen and (max-width: 768px) {
     .nav {
-        flex-direction: row;
         width: 100vw;
         height: 4em;
         top: calc(100vh - 4em);
         bottom: 0;
+    }
+    .active-page {
+        border-right: none;
+        border-bottom: 2px solid var(--green);
     }
     .nav:hover {
         width: 100vw;

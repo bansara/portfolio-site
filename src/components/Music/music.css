@@ -1,0 +1,12 @@
+.music-container {
+  width: calc(100vw - 4em);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.music-container .icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}

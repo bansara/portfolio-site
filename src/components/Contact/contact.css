@@ -33,8 +33,7 @@ div.body-div {
     pointer-events: none;
 }
 .body-div::before{
-    bottom: 0;
-    top: 100%;
+    bottom: 3px;
 }
 .body-div.focused::after,
 .body-div.focused::before {
@@ -45,7 +44,7 @@ div.body-div {
 .contact-container textarea:focus, 
 .contact-container textarea:focus:hover {
     width: 300px;
-    height: 300px;
+    height: 150px;
     resize: none;
     box-sizing: border-box;
     background-color: rgba(0,0,0,0.09);
@@ -53,6 +52,7 @@ div.body-div {
     font-family: 'Roboto', sans-serif;
     border-radius: 4px;
     border: none;
+    border-bottom: 1px solid rgb(17,20,26);
     padding: 1em;
     overflow-y: scroll;
     transition: 300ms;
