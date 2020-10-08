@@ -2,11 +2,12 @@ export interface Context {
   context: AudioContext;
   audioSource: HTMLAudioElement;
   audioPlayer: MediaElementAudioSourceNode;
+  analyser: AnalyserNode;
   masterVol: GainNode;
-  canvas: HTMLCanvasElement;
+  id: number;
 }
 
-export const createAudioContext = (): Context => {
+export const createAudioContext = (handleNext: () => void): Context => {
   const context: AudioContext = new AudioContext();
   const masterVol = context.createGain();
   masterVol.connect(context.destination);
@@ -15,12 +16,20 @@ export const createAudioContext = (): Context => {
     audioSource
   );
   audioPlayer.connect(masterVol);
-  const canvas = document.createElement("canvas");
+
+  audioSource.onended = () => {
+    handleNext();
+  };
+  const analyser: AnalyserNode = context.createAnalyser();
+  analyser.fftSize = 64;
+  audioPlayer.connect(analyser);
+  const id: number = Math.random();
   return {
     context,
     audioSource,
     audioPlayer,
+    analyser,
+    id,
     masterVol,
-    canvas,
   };
 };

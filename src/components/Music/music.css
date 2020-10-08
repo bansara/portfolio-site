@@ -10,3 +10,15 @@
   border: none;
   cursor: pointer;
 }
+.music-container canvas {
+  position: absolute;
+  width: calc(100vw - 4em);
+  height: 100vh;
+  z-index: -1;
+}
+@media (max-width: 768px) {
+  .music-container canvas,
+  .music-container {
+    width: 100vw;
+  }
+}
