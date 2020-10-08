@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
         <nav className='nav'>
             <ul className="navbar-nav">
                 <li className="nav-item">
-                    <Link to="/about" className={pathname === '/about' ? 'nav-link active-page' : 'nav-link'}>
+                    <Link to="/about" className={pathname === '/' ? 'nav-link active-page' : 'nav-link'}>
                         <PersonOutlineIcon />
                         <span className='link-text'>About</span>
                     </Link>

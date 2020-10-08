@@ -1,125 +1,125 @@
-import React, { useState, useEffect, useRef } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import './contact.css';
+import React, { useState, useRef } from "react";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import "./contact.css";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      '& > *': {
+      "& > *": {
         margin: theme.spacing(1),
         width: 300,
-        maxWidth: '100%',
-        color: 'var(--white)',
+        maxWidth: "100%",
+        color: "var(--white)",
       },
     },
-  }),
+  })
 );
 
 const Contact: React.FC = () => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [subject, setSubject] = useState('');
-    const [body, setBody] = useState('body *');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [body, setBody] = useState("body *");
+  const setters: React.Dispatch<string>[] = [
+    setName,
+    setEmail,
+    setSubject,
+    setBody,
+  ];
 
-    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-        e.preventDefault();
-        console.log(name, email, subject, body)
+  const handleSubmit = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void => {
+    e.preventDefault();
+    console.log(name, email, subject, body);
+    setters.forEach((fn) => fn(""));
+  };
+  const textarea = useRef<HTMLTextAreaElement>(null);
+  const div = useRef<HTMLDivElement>(null);
+
+  const handleFocus = (): void => {
+    if (textarea.current !== null && div.current !== null) {
+      div.current.classList.add("focused");
+      if (body === "body *") {
+        setBody("");
+      }
     }
-    const textarea = useRef<HTMLTextAreaElement>(null);
-    const div= useRef<HTMLDivElement>(null);
-
-    const handleFocus = (): void => {
-        if(textarea.current !== null && div.current !== null) {
-            div.current.classList.add('focused')
-            if(body === 'body *'){
-                setBody('');
-            }
-        }
+  };
+  const handleBlur = (): void => {
+    if (textarea.current !== null && div.current !== null) {
+      div.current.classList.remove("focused");
+      if (body === "") {
+        setBody("body *");
+      }
     }
-    const handleBlur = (): void => {
-        if(textarea.current !== null && div.current !== null) {
-            div.current.classList.remove('focused')
-            if(body === ''){
-                setBody('body *');
-            }
-        }
-    }
-    useEffect(() => {
-        const textarea: HTMLElement | null = document.querySelector('.body-text');
-        const div: HTMLElement | null = document.querySelector('.body-div');
-            if(textarea && div) {
-                textarea.addEventListener('focus', () => {
-                    div.classList.add('focused')
-                });
-                textarea.addEventListener('blur', () => {
-                    div.classList.remove('focused')
-                });
-            }
-    }, [])
+  };
 
-    const classes = useStyles();
+  const classes = useStyles();
 
-    return (
-        <div className="contact-container">
-            <form>
-                <div>
-                    <TextField 
-                        label='name' 
-                        required
-                        value={name} 
-                        onChange={(e) => setName(e.target.value)} 
-                        color='primary' 
-                        variant='filled'
-                        className={classes.root}
-                    />
-                </div>
-                <div>
-                    <TextField 
-                        label='email' 
-                        type='email'
-                        required
-                        error={!!email.length && !/^[a-zA-Z0-9_.]+@[a-zA-Z0-9-.]+\.[a-z]{2,4}$/.test(email)}
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)} 
-                        color='primary'
-                        variant='filled'
-                        className={classes.root}
-                    />
-                </div>
-                <div>
-                    <TextField 
-                        label='subject' 
-                        value={subject} 
-                        onChange={(e) => setSubject(e.target.value)} 
-                        color='primary'
-                        variant='filled'
-                        className={classes.root}
-                    />
-                </div>
-                <div className='body-div' ref={div} >
-                    <textarea 
-                        className='body-text'
-                        value={body}
-                        onChange={(e) => setBody(e.target.value)}
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}
-                        ref={textarea}
-                    />
-                </div>
-                <Button 
-                    variant='outlined' 
-                    color='primary'
-                    type='submit'
-                    onClick={handleSubmit}
-                    style={{width: 200, marginTop: '1rem'}}
-                >
-                    Submit
-                </Button>
-            </form>
+  return (
+    <div className='contact-container'>
+      <form>
+        <div>
+          <TextField
+            label='name'
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            color='primary'
+            variant='filled'
+            className={classes.root}
+          />
         </div>
-    )
-}
+        <div>
+          <TextField
+            label='email'
+            type='email'
+            required
+            error={
+              !!email.length &&
+              !/^[a-zA-Z0-9_.]+@[a-zA-Z0-9-.]+\.[a-z]{2,4}$/.test(email)
+            }
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            color='primary'
+            variant='filled'
+            className={classes.root}
+          />
+        </div>
+        <div>
+          <TextField
+            label='subject'
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+            color='primary'
+            variant='filled'
+            className={classes.root}
+          />
+        </div>
+        <div className='body-div' ref={div}>
+          <textarea
+            className='body-text'
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            ref={textarea}
+          />
+        </div>
+        <Button
+          variant='outlined'
+          color='primary'
+          type='submit'
+          onClick={handleSubmit}
+          style={{ width: 200, marginTop: "1rem" }}
+        >
+          Submit
+        </Button>
+      </form>
+    </div>
+  );
+};
 
 export default Contact;
