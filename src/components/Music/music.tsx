@@ -1,15 +1,13 @@
 import React, {
   useState,
-  useMemo,
   useRef,
   useEffect,
   useCallback,
+  useContext
 } from "react";
-import PlayArrowOutlinedIcon from "@material-ui/icons/PlayArrowOutlined";
-import PauseOutlinedIcon from "@material-ui/icons/PauseOutlined";
-import SkipNextOutlinedIcon from "@material-ui/icons/SkipNextOutlined";
-import SkipPreviousOutlinedIcon from "@material-ui/icons/SkipPreviousOutlined";
-import { Context, createAudioContext } from "./context";
+import { Context } from './context';
+import { ReactAudioContext } from '../../App'
+import Player from "./player";
 import { tracks } from "./tracks";
 import { draw } from "./draw";
 import "./music.css";
@@ -17,8 +15,10 @@ import "./music.css";
 const Music: React.FC = () => {
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const context: Context = useContext(ReactAudioContext);
   const canvas = useRef<HTMLCanvasElement>(null);
-
+  const container = useRef<HTMLDivElement>(null);
+  let playPauseTimeoutId: NodeJS.Timeout;
   const handleNext = useCallback((): void => {
     setIndex((i) => {
       if (i < tracks.length - 1) {
@@ -27,28 +27,67 @@ const Music: React.FC = () => {
       return i;
     });
   }, [setIndex]);
-
-  const context: Context = useMemo(() => createAudioContext(handleNext), [
-    handleNext,
-  ]);
-
-  useEffect(() => {
-    if (playing) {
+  context.audioSource.onended = (): void => {
+    handleNext();
+  }
+  const handlePlay = (): void => {
+    if (context.audioSource.paused) {
       context.audioSource.src = tracks[index].src;
+      if (playPauseTimeoutId) {
+        clearTimeout(playPauseTimeoutId);
+      }
+      if (context.context.state !== "running") {
+        context.context.resume();
+      }
+      context.masterVol.gain.linearRampToValueAtTime(
+        0,
+        context.context.currentTime + 0.1
+      );
+      playPauseTimeoutId = setTimeout(() => {
+        context.masterVol.gain.linearRampToValueAtTime(
+          1,
+          context.context.currentTime + 0.1
+        );
+        context.audioSource.play();
+        setPlaying(true);
+      }, 100);
+    }
+  };
+  const handlePause = (): void => {
+    if (playPauseTimeoutId) {
+      clearTimeout(playPauseTimeoutId);
+    }
+    context.masterVol.gain.setTargetAtTime(
+      0,
+      context.context.currentTime,
+      0.01
+    );
+    playPauseTimeoutId = setTimeout(() => {
+      context.audioSource.pause();
+      setPlaying(false);
+    }, 20);
+  };
+
+  const handlePrev = (): void => {
+    if (context.audioSource.currentTime > 2) {
+      context.audioSource.currentTime = 0;
+    } else {
+      if (index > 0) {
+        setIndex(index - 1);
+      }
+    }
+  };
+  // Fires after handleNext and handlePrev
+  useEffect(() => {
+    context.audioSource.src = tracks[index].src;
+    context.audioSource.load();
+    if (playing) {
       context.audioSource.play();
     }
   }, [index, context.audioSource, playing]);
 
   useEffect(() => {
-    if (playing) {
-      if (context.context.state !== "running") {
-        context.context.resume();
-      }
-      context.audioSource.play();
-    }
-  }, [playing, context.audioSource, context.context]);
-
-  useEffect(() => {
+    // fade out audio when user navigates away
     return () => {
       context.masterVol.gain.linearRampToValueAtTime(
         0,
@@ -63,10 +102,13 @@ const Music: React.FC = () => {
   useEffect(() => {
     let animationId: number;
     let intervalId: NodeJS.Timeout;
-    if (canvas.current !== null) {
+    if (canvas.current !== null && container.current !== null) {
       const canvasCtx: CanvasRenderingContext2D | null = canvas.current.getContext(
         "2d"
       );
+      let containerProps: DOMRect = container.current.getBoundingClientRect();
+      canvas.current.width = containerProps.width;
+      canvas.current.height = containerProps.height;
       const bufferLength: number = context.analyser.frequencyBinCount;
       const dataArray: Uint8Array = new Uint8Array(bufferLength);
       const width: number = canvas.current.width;
@@ -98,47 +140,16 @@ const Music: React.FC = () => {
   }, [context.analyser, playing]);
 
   return (
-    <div className='music-container'>
+    <div className='music-container' ref={container}>
       <canvas ref={canvas} />
-      <button
-        onClick={() => {
-          if (index > 0) {
-            setIndex(index - 1);
-          } else {
-            setIndex(tracks.length - 1);
-          }
-        }}
-        className='icon-button'
-      >
-        <SkipPreviousOutlinedIcon
-          color='secondary'
-          style={{ fontSize: "3em" }}
-        />
-      </button>
-      <button
-        onClick={() => {
-          setPlaying(true);
-        }}
-        className='icon-button'
-      >
-        <PlayArrowOutlinedIcon color='secondary' style={{ fontSize: "5em" }} />
-      </button>
-      <button
-        onClick={() => {
-          context.audioSource.pause();
-          context.context.suspend();
-          setPlaying(false);
-        }}
-        className='icon-button'
-      >
-        <PauseOutlinedIcon color='secondary' style={{ fontSize: "4.5em" }} />
-      </button>
-      <button onClick={handleNext} className='icon-button'>
-        <SkipNextOutlinedIcon color='secondary' style={{ fontSize: "3em" }} />
-      </button>
-      {/* {tracks.map((track) => (
-        <p key={track.title}>{track.title}</p>
-      ))} */}
+      <Player
+        handlePrev={handlePrev}
+        handlePlay={handlePlay}
+        handlePause={handlePause}
+        handleNext={handleNext}
+        index={index}
+        setIndex={setIndex}
+      />
     </div>
   );
 };

@@ -7,9 +7,13 @@ export interface Context {
   id: number;
 }
 
-export const createAudioContext = (handleNext: () => void): Context => {
-  const context: AudioContext = new AudioContext();
+export const createAudioContext = (): Context => {
+  // typescript doesn't recognize webKitAudioContext, but it's necessary for iOS
+  // @ts-ignore
+  const audioContext = window.AudioContext || window.webkitAudioContext;
+  const context: AudioContext = new audioContext();
   const masterVol = context.createGain();
+  masterVol.gain.value = 0;
   masterVol.connect(context.destination);
   const audioSource: HTMLAudioElement = document.createElement("audio");
   const audioPlayer: MediaElementAudioSourceNode = context.createMediaElementSource(
@@ -17,9 +21,9 @@ export const createAudioContext = (handleNext: () => void): Context => {
   );
   audioPlayer.connect(masterVol);
 
-  audioSource.onended = () => {
-    handleNext();
-  };
+  // audioSource.onended = () => {
+  //   handleNext();
+  // };
   const analyser: AnalyserNode = context.createAnalyser();
   analyser.fftSize = 64;
   audioPlayer.connect(analyser);

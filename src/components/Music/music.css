@@ -1,6 +1,13 @@
 .music-container {
   width: calc(100vw - 4em);
   height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.music-container .player {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,13 +19,41 @@
 }
 .music-container canvas {
   position: absolute;
-  width: calc(100vw - 4em);
-  height: 100vh;
+  bottom: 0;
+  left: 0;
+  max-width: calc(100vw - 4em);
+  max-height: 100vh;
   z-index: -1;
 }
+.music-container .player-container {
+  background-color: var(--veryDark);
+  padding: 1em;
+}
+.music-container .track-list p {
+  margin: 0.25em 0;
+  padding: 0 0.25rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  color: var(--greenDk);
+  transition: 0.3s;
+}
+.track-list p.selected {
+  background-color: var(--greenDk);
+  color: var(--veryDark);
+}
+.player-container .slider {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+.player-container .slider svg,
+.player-container .slider p {
+  margin: 0 1rem;
+  color: var(--greenDk);
+}
 @media (max-width: 768px) {
-  .music-container canvas,
   .music-container {
     width: 100vw;
+    height: calc(100vw - 4em);
   }
 }
