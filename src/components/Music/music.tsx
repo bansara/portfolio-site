@@ -1,6 +1,5 @@
 import React, {
   useState,
-  useRef,
   useEffect,
   useCallback,
   useContext
@@ -9,15 +8,13 @@ import { Context } from './context';
 import { ReactAudioContext } from '../../App'
 import Player from "./player";
 import { tracks } from "./tracks";
-import { draw } from "./draw";
 import "./music.css";
 
 const Music: React.FC = () => {
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const context: Context = useContext(ReactAudioContext);
-  const canvas = useRef<HTMLCanvasElement>(null);
-  const container = useRef<HTMLDivElement>(null);
+
   let playPauseTimeoutId: NodeJS.Timeout;
   const handleNext = useCallback((): void => {
     setIndex((i) => {
@@ -86,62 +83,22 @@ const Music: React.FC = () => {
     }
   }, [index, context.audioSource, playing]);
 
+  // fade out audio when user navigates away
   useEffect(() => {
-    // fade out audio when user navigates away
     return () => {
-      context.masterVol.gain.linearRampToValueAtTime(
+      context.masterVol.gain.setTargetAtTime(
         0,
-        context.context.currentTime + 0.5
+        context.context.currentTime + 0.5,
+        0.1
       );
-      setTimeout(() => {
-        context.context.close();
-      }, 500);
+      // setTimeout(() => {
+      //   context.context.close();
+      // }, 500);
     };
   }, [context]);
 
-  useEffect(() => {
-    let animationId: number;
-    let intervalId: NodeJS.Timeout;
-    if (canvas.current !== null && container.current !== null) {
-      const canvasCtx: CanvasRenderingContext2D | null = canvas.current.getContext(
-        "2d"
-      );
-      let containerProps: DOMRect = container.current.getBoundingClientRect();
-      canvas.current.width = containerProps.width;
-      canvas.current.height = containerProps.height;
-      const bufferLength: number = context.analyser.frequencyBinCount;
-      const dataArray: Uint8Array = new Uint8Array(bufferLength);
-      const width: number = canvas.current.width;
-      const height: number = canvas.current.height;
-      intervalId = setInterval(() => {
-        animationId = requestAnimationFrame(() => {
-          draw(
-            canvasCtx,
-            height,
-            width,
-            context.analyser,
-            dataArray,
-            bufferLength,
-            playing
-          );
-        });
-      }, 80);
-      if (!playing && canvasCtx) {
-        animationId = requestAnimationFrame(() => {
-          canvasCtx.fillStyle = "rgb(36,41,56)";
-          canvasCtx.fillRect(0, 0, width, height);
-        });
-      }
-    }
-    return () => {
-      clearInterval(intervalId);
-      cancelAnimationFrame(animationId);
-    };
-  }, [context.analyser, playing]);
-
   return (
-    <div className='music-container' ref={container}>
-      <canvas ref={canvas} />
+    <div className='music-container'>
       <Player
         handlePrev={handlePrev}
         handlePlay={handlePlay}

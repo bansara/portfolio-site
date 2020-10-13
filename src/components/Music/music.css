@@ -18,15 +18,12 @@
   cursor: pointer;
 }
 .music-container canvas {
-  position: absolute;
-  bottom: 0;
-  left: 0;
   max-width: calc(100vw - 4em);
   max-height: 100vh;
   z-index: -1;
 }
 .music-container .player-container {
-  background-color: var(--veryDark);
+  background-color: var(--dark);
   padding: 1em;
 }
 .music-container .track-list p {
@@ -50,6 +47,12 @@
 .player-container .slider p {
   margin: 0 1rem;
   color: var(--greenDk);
+}
+.player-container .slider p.loadingMsg {
+  margin: 0;
+  height: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--blueGray);
 }
 @media (max-width: 768px) {
   .music-container {

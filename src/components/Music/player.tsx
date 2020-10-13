@@ -1,6 +1,7 @@
-import React, {useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { ReactAudioContext } from '../../App';
 import { Context } from './context';
+import { draw } from "./draw";
 import { renderTime } from "./utils";
 import Slider from '@material-ui/core/Slider';
 import VolumeDown from '@material-ui/icons/VolumeDown';
@@ -20,6 +21,9 @@ interface Props {
 const Player: React.FC<Props> = (props: Props) => {
   const [volume, setVolume] = useState(1);
   const [trackTime, setTrackTime] = useState(0);
+  const [loading, setLoading] = useState("loading...")
+  const canvas = useRef<HTMLCanvasElement>(null);
+  const container = useRef<HTMLDivElement>(null);
   const context: Context = useContext(ReactAudioContext);
   const { audioSource } = context;
   const handleVolume = (event: any, newValue: number | number[]) => {
@@ -40,6 +44,12 @@ const Player: React.FC<Props> = (props: Props) => {
   } = props;
 
   useEffect(() => {
+    audioSource.oncanplaythrough = () => {
+      setLoading("");
+    };
+    audioSource.onemptied = () => {
+      setLoading("Loading...");
+    };
     const intervalId: NodeJS.Timeout = setInterval(() => {
       const currentTime = audioSource.currentTime / audioSource.duration;
       setTrackTime(currentTime);
@@ -47,16 +57,60 @@ const Player: React.FC<Props> = (props: Props) => {
     return () => {
       clearInterval(intervalId);
     }
-  },[audioSource])
+  },[audioSource]);
+
+  useEffect(() => {
+    let animationId: number;
+    let intervalId: NodeJS.Timeout;
+    if (canvas.current !== null && container.current !== null) {
+      const canvasCtx: CanvasRenderingContext2D | null = canvas.current.getContext(
+        "2d"
+      );
+      let containerProps: DOMRect = container.current.getBoundingClientRect();
+      canvas.current.width = containerProps.width - 32;
+      canvas.current.height = 64;
+      const bufferLength: number = context.analyser.frequencyBinCount;
+      const dataArray: Uint8Array = new Uint8Array(bufferLength);
+      const width: number = canvas.current.width;
+      const height: number = canvas.current.height;
+      intervalId = setInterval(() => {
+        animationId = requestAnimationFrame(() => {
+          draw(
+            canvasCtx,
+            height,
+            width,
+            context.analyser,
+            dataArray,
+            bufferLength,
+            !audioSource.paused
+          );
+        });
+      }, 80);
+      if (audioSource.paused && canvasCtx) {
+        animationId = requestAnimationFrame(() => {
+          canvasCtx.fillStyle = "rgba(24,26,35,0)";
+          canvasCtx.fillRect(0, 0, width, height);
+        });
+      }
+    }
+    return () => {
+      clearInterval(intervalId);
+      cancelAnimationFrame(animationId);
+    };
+  }, [context.analyser, audioSource.paused]);
 
   return (
-    <div className='player-container'>
+    <div className='player-container' ref={container} >
+      <canvas ref={canvas} />
       <PlayerIcons
         handlePrev={handlePrev}
         handlePlay={handlePlay}
         handlePause={handlePause}
         handleNext={handleNext}
       />
+      <div className="slider">
+      <p className='loadingMsg'>{loading}</p>
+      </div>
       <div className="slider">
         <p>{renderTime(Math.round(audioSource.currentTime))}</p>
         <Slider 
