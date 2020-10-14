@@ -50,7 +50,7 @@ const PortfolioProject: React.FC<Props> = (props: Props) => {
 
   const handleNext = (): void => {
     if (div.current !== null) {
-      const scrollHeight: number = window.scrollY;
+      const scrollHeight: number = window.scrollY - 64;
       const divInfo: DOMRect = div.current.getBoundingClientRect();
       window.scroll({
         top: scrollHeight + divInfo.height + divInfo.top,
@@ -61,7 +61,7 @@ const PortfolioProject: React.FC<Props> = (props: Props) => {
   };
   const handlePrev = (): void => {
     if (div.current !== null) {
-      const scrollHeight: number = window.scrollY;
+      const scrollHeight: number = window.scrollY - 64;
       const divInfo: DOMRect = div.current.getBoundingClientRect();
       window.scroll({
         top: scrollHeight - divInfo.height + divInfo.top,
