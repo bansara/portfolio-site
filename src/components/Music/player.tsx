@@ -25,10 +25,11 @@ const Player: React.FC<Props> = (props: Props) => {
   const canvas = useRef<HTMLCanvasElement>(null);
   const container = useRef<HTMLDivElement>(null);
   const context: Context = useContext(ReactAudioContext);
-  const { audioSource } = context;
+  const { audioSource, masterVol} = context;
   const handleVolume = (event: any, newValue: number | number[]) => {
     setVolume(newValue as number);
-    audioSource.volume = newValue as number;
+    // audioSource.volume = newValue as number;
+    masterVol.gain.setTargetAtTime(newValue as number,context.context.currentTime, 0.01);
   };
   const handleTrackTime = (event: any, newValue: number | number[]) => {
     setTrackTime(newValue as number);
@@ -50,10 +51,19 @@ const Player: React.FC<Props> = (props: Props) => {
     audioSource.onemptied = () => {
       setLoading("Loading...");
     };
+    audioSource.onwaiting = () => {
+      setLoading("Waiting for data...")
+    }
+    audioSource.onstalled = () => {
+      setLoading("Stalled...")
+    }
+    audioSource.onerror = () => {
+      setLoading("ERROR...")
+    }
     const intervalId: NodeJS.Timeout = setInterval(() => {
       const currentTime = audioSource.currentTime / audioSource.duration;
       setTrackTime(currentTime);
-    }, 500);
+    }, 1000);
     return () => {
       clearInterval(intervalId);
     }
@@ -85,7 +95,7 @@ const Player: React.FC<Props> = (props: Props) => {
             !audioSource.paused
           );
         });
-      }, 80);
+      }, 100);
       if (audioSource.paused && canvasCtx) {
         animationId = requestAnimationFrame(() => {
           canvasCtx.fillStyle = "rgba(24,26,35,0)";

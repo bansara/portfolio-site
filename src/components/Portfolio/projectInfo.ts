@@ -25,7 +25,7 @@ const skrap: ProjectInfo = {
     "AWS",
   ],
   description:
-    "Skräp is a marketplace app that enables people to offer money for others to clean up public parks. My capstone project ar Fullstack Academy.",
+    "Skräp is a marketplace app that enables people to offer money for others to clean up public parks. My capstone project at Fullstack Academy.",
   deployLink: "https://skraplitter.herokuapp.com",
   githubLink: "https://github.com/SkrapLitter/capstone",
   hasVideo: true,

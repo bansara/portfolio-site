@@ -91,9 +91,6 @@ const Music: React.FC = () => {
         context.context.currentTime + 0.5,
         0.1
       );
-      // setTimeout(() => {
-      //   context.context.close();
-      // }, 500);
     };
   }, [context]);
 

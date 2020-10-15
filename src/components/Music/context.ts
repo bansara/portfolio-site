@@ -11,7 +11,7 @@ export const createAudioContext = (): Context => {
   // typescript doesn't recognize webKitAudioContext, but it's necessary for iOS
   // @ts-ignore
   const audioContext = window.AudioContext || window.webkitAudioContext;
-  const context: AudioContext = new audioContext();
+  const context: AudioContext = new audioContext({sampleRate: 44100});
   const masterVol = context.createGain();
   masterVol.gain.value = 0;
   masterVol.connect(context.destination);
@@ -19,14 +19,11 @@ export const createAudioContext = (): Context => {
   const audioPlayer: MediaElementAudioSourceNode = context.createMediaElementSource(
     audioSource
   );
-  audioPlayer.connect(masterVol);
-
-  // audioSource.onended = () => {
-  //   handleNext();
-  // };
+  
   const analyser: AnalyserNode = context.createAnalyser();
   analyser.fftSize = 64;
   audioPlayer.connect(analyser);
+  analyser.connect(masterVol);
   const id: number = Math.random();
   return {
     context,
