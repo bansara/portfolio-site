@@ -11,7 +11,7 @@
 .headshot {
   max-width: 100%;
   filter: saturate(40%) hue-rotate(180deg);
-  transition: filter 300ms, transform 500ms, opacity 500ms;
+  transition: filter 300ms, transform 1000ms, opacity 1000ms;
 }
 .headshot:hover {
   filter: saturate(40%) hue-rotate(0deg);
@@ -27,10 +27,22 @@
 .info-container p {
   color: var(--blueGray);
   margin: 1rem 0;
+  opacity: 1;
+}
+.info-container p.bio {
+  transition: 1250ms opacity ease-in-out;
+  transition-delay: 2000ms;
+  transition-property: opacity;
+}
+p.transparent {
+  opacity: 0;
 }
 .info-container p.subheadline {
   color: var(--blue);
   font-size: 1.2rem;
+  transition: 800ms opacity ease-in-out;
+  transition-delay: 1000ms;
+  transition-property: opacity;
 }
 .info-container .icons {
   display: flex;
@@ -43,6 +55,17 @@
 .info-container .icons a.icon-link:hover {
   color: var(--green);
 }
+.info-container h1 {
+  opacity: 1;
+  transform: none;
+  transition: 1000ms;
+  /* transition-delay: 500ms;
+  transition-property: opacity, transform; */
+}
+.info-container .top {
+  transform: translateY(-4em);
+  opacity: 0;
+}
 .highlight {
   color: var(--teal);
 }
@@ -53,7 +76,6 @@
   background-color: rgba(0, 0, 0, 0);
 }
 .right {
-  transition-delay: 1000ms;
   transform: translateX(4em);
   opacity: 0;
 }

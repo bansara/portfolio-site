@@ -98,7 +98,8 @@
   .info {
     order: -1;
   }
-  .portfolio iframe {
+  .portfolio iframe,
+  .video img {
     max-width: 560px;
     max-height: 315px;
   }
@@ -121,10 +122,7 @@
   .portfolio p {
     margin: 1rem 0;
   }
-  .portfolio iframe {
-    max-width: 400px;
-    max-height: 225px;
-  }
+  .portfolio iframe,
   .video img {
     max-width: 100%;
   }

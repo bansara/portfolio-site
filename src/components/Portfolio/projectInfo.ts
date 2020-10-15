@@ -5,7 +5,7 @@ const pedalboard: ProjectInfo = {
   headline: "Pedalboard JS",
   technologies: ["Web Audio API", "Web MIDI API", "React", "Redux"],
   description:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, error eaque! Modi est impedit id optio consequuntur laudantium sit, illo minima quis molestias laborum fugiat eaque quos animi vel doloremque.",
+    "Drawing on my background in audio engineering, I used the Web Audio API to model guitar effects in the browser that are controllable via a MIDI foot pedal. Built in a single week for Fullstack Academy's ‘Stackathon’ project.",
   deployLink: "https://pedalboardjs.netlify.com",
   githubLink: "https://github.com/bansara/pedalboard",
   hasVideo: true,
@@ -25,7 +25,7 @@ const skrap: ProjectInfo = {
     "AWS",
   ],
   description:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, error eaque! Modi est impedit id optio consequuntur laudantium sit, illo minima quis molestias laborum fugiat eaque quos animi vel doloremque.",
+    "Skräp is a marketplace app that enables people to offer money for others to clean up public parks. My capstone project ar Fullstack Academy.",
   deployLink: "https://skraplitter.herokuapp.com",
   githubLink: "https://github.com/SkrapLitter/capstone",
   hasVideo: true,
@@ -36,7 +36,7 @@ const graceShopper: ProjectInfo = {
   headline: "Grace's Hopper",
   technologies: ["React", "Redux", "Express", "Sequelize", "PostgreSQL", "AWS"],
   description:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, error eaque! Modi est impedit id optio consequuntur laudantium sit, illo minima quis molestias laborum fugiat eaque quos animi vel doloremque.",
+    "Grace's Hopper is a fictional e-commerce site selling the world's finest smooth jazz instruments. Built for Fullstack Academy's Grace Shopper project.",
   deployLink: "https://graces-hopper.herokuapp.com/",
   githubLink: "https://github.com/Rebel-Alliance-2004/grace-shopper",
   hasVideo: false,
