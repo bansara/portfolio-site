@@ -20,21 +20,32 @@ const useStyles = makeStyles((theme: Theme) =>
 const Contact: React.FC = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState("");
-  const [body, setBody] = useState("body *");
+  const [body, setBody] = useState("message *");
   const setters: React.Dispatch<string>[] = [
     setName,
     setEmail,
-    setSubject,
     setBody,
   ];
+
+  const encode = (data: any) => {
+    return Object.keys(data)
+        .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+        .join("&");
+  }
 
   const handleSubmit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({ "form-name": "contact", name, email, body })
+    })
+      .then(() => {
+        setters.forEach((fn) => fn(""));
+      })
+      .catch(error => alert(error));
     e.preventDefault();
-    console.log(name, email, subject, body);
-    setters.forEach((fn) => fn(""));
   };
   const textarea = useRef<HTMLTextAreaElement>(null);
   const div = useRef<HTMLDivElement>(null);
@@ -51,7 +62,7 @@ const Contact: React.FC = () => {
     if (textarea.current !== null && div.current !== null) {
       div.current.classList.remove("focused");
       if (body === "") {
-        setBody("body *");
+        setBody("message *");
       }
     }
   };
@@ -83,16 +94,6 @@ const Contact: React.FC = () => {
             }
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            color='primary'
-            variant='filled'
-            className={classes.root}
-          />
-        </div>
-        <div>
-          <TextField
-            label='subject'
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
             color='primary'
             variant='filled'
             className={classes.root}
