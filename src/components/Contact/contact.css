@@ -61,7 +61,16 @@ div.body-div {
 .contact-container textarea:hover {
   background-color: rgba(0, 0, 0, 0.13);
 }
-
+p.alert {
+  background-color: var(--green);
+  color: var(--veryDark);
+  padding: 1em;
+}
+p.error {
+  background-color: var(--red);
+  color: var(--white);
+  padding: 1em;
+}
 @media screen and (max-width: 768px) {
   .contact-container textarea {
     max-width: 100%;

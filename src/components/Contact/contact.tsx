@@ -1,7 +1,9 @@
 import React, { useState, useRef } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Snackbar from '@material-ui/core/Snackbar';
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { isEmail } from '../../utils/isEmail';
 import "./contact.css";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -21,6 +23,9 @@ const Contact: React.FC = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [body, setBody] = useState("message *");
+  const [open, setOpen] = useState(false);
+  const [alert, setAlert] = useState("");
+  const [error, setError] = useState(false);
   const setters: React.Dispatch<string>[] = [
     setName,
     setEmail,
@@ -36,15 +41,35 @@ const Contact: React.FC = () => {
   const handleSubmit = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({ "form-name": "contact", name, email, body })
-    })
-      .then(() => {
-        setters.forEach((fn) => fn(""));
+    if(name.length && body.length && body !== "message *" && isEmail(email)){
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode({ "form-name": "contact", name, email, body })
       })
-      .catch(error => alert(error));
+        .then(() => {
+          setError(false);
+          setAlert("Thank you! Your message has been sent.");
+          setOpen(true);
+          setters.forEach((fn) => fn(""));
+        })
+        .catch(() => {
+          setOpen(true);
+          setError(true);
+          setAlert("Oops! There was an error. Please Try again!");
+        });
+      } else {
+        setError(true);
+        if(!name.length){
+          setAlert("Name is required");
+        } else if(!isEmail(email)){
+          setAlert("Please enter a valid email address");
+        } else {
+          setAlert("Message must not be empty");
+        }
+        setOpen(true);
+    }
+
     e.preventDefault();
   };
   const textarea = useRef<HTMLTextAreaElement>(null);
@@ -53,7 +78,7 @@ const Contact: React.FC = () => {
   const handleFocus = (): void => {
     if (textarea.current !== null && div.current !== null) {
       div.current.classList.add("focused");
-      if (body === "body *") {
+      if (body === "message *") {
         setBody("");
       }
     }
@@ -65,6 +90,12 @@ const Contact: React.FC = () => {
         setBody("message *");
       }
     }
+  };
+  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
   };
 
   const classes = useStyles();
@@ -90,7 +121,7 @@ const Contact: React.FC = () => {
             required
             error={
               !!email.length &&
-              !/^[a-zA-Z0-9_.]+@[a-zA-Z0-9-.]+\.[a-z]{2,4}$/.test(email)
+              !isEmail(email)
             }
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -119,6 +150,14 @@ const Contact: React.FC = () => {
           Submit
         </Button>
       </form>
+      <Snackbar 
+        open={open} 
+        autoHideDuration={4000} 
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <p className={error ? 'error' : 'alert'}>{alert}</p>
+      </Snackbar>
     </div>
   );
 };

@@ -8,6 +8,7 @@
   --green: rgb(39, 232, 167);
   --greenDk: rgb(50, 174, 133);
   --teal: rgb(83, 190, 178);
+  --red: rgb(197, 39, 83);
 }
 #root {
   box-sizing: border-box;
