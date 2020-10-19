@@ -12,6 +12,11 @@ const Navbar: React.FC = () => {
 
     return (
         <nav className='nav'>
+            <div className='nav-logo'>
+                <Link to="/">
+                    <h1 className='krona'>&lt; JoshGeisler /&gt;</h1>
+                </Link>
+            </div>
             <ul className="navbar-nav">
                 <li className="nav-item">
                     <Link to="/about" className={pathname === '/' ? 'nav-link active-page' : 'nav-link'}>
