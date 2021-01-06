@@ -1,5 +1,6 @@
 import { ProjectInfo } from "./projectInfoInterface";
 import grace from "./graceShopper.png";
+import poop from "./poopyLoops.png";
 
 const pedalboard: ProjectInfo = {
   headline: "Pedalboard JS",
@@ -10,6 +11,23 @@ const pedalboard: ProjectInfo = {
   githubLink: "https://github.com/bansara/pedalboard",
   hasVideo: true,
   youtubeLink: "https://www.youtube.com/embed/ejlRMCp0X0M",
+};
+
+const poopyLoops: ProjectInfo = {
+  headline: "PoopyLoops",
+  technologies: [
+    "React",
+    "Typescript",
+    "Web Audio API",
+    "Express",
+    "Socket IO",
+  ],
+  description:
+    "PoopyLoops is a real-time, collaborative, loop-based, musical instrument made to enable easy musical collaboration over the internet during the pandemic era. This project is an ongoing work in progress that is being continually updated.",
+  deployLink: "http://poopyloops.com/",
+  githubLink: "http://poopyloops.com/",
+  hasVideo: false,
+  img: poop,
 };
 
 const skrap: ProjectInfo = {
@@ -43,4 +61,4 @@ const graceShopper: ProjectInfo = {
   img: grace,
 };
 
-export const projects = [pedalboard, skrap, graceShopper];
+export const projects = [pedalboard, poopyLoops, skrap, graceShopper];
