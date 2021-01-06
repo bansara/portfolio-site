@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
-import { ReactAudioContext } from '../../App';
-import { Context } from './context';
+import { ReactAudioContext } from "../../App";
+import { Context } from "./context";
 import { draw } from "./draw";
 import { renderTime } from "./utils";
-import Slider from '@material-ui/core/Slider';
-import VolumeDown from '@material-ui/icons/VolumeDown';
-import VolumeUp from '@material-ui/icons/VolumeUp';
+import Slider from "@material-ui/core/Slider";
+import VolumeDown from "@material-ui/icons/VolumeDown";
+import VolumeUp from "@material-ui/icons/VolumeUp";
 import PlayerIcons from "./playerIcons";
 import TrackList from "./trackList";
 
@@ -16,24 +16,29 @@ interface Props {
   handlePlay: () => void;
   handlePause: () => void;
   handleNext: () => void;
+  playing: boolean;
 }
 
 const Player: React.FC<Props> = (props: Props) => {
   const [volume, setVolume] = useState(1);
   const [trackTime, setTrackTime] = useState(0);
-  const [loading, setLoading] = useState("loading...")
+  const [loading, setLoading] = useState("loading...");
   const canvas = useRef<HTMLCanvasElement>(null);
   const container = useRef<HTMLDivElement>(null);
   const context: Context = useContext(ReactAudioContext);
-  const { audioSource, masterVol} = context;
+  const { audioSource, masterVol } = context;
   const handleVolume = (event: any, newValue: number | number[]) => {
     setVolume(newValue as number);
     // audioSource.volume = newValue as number;
-    masterVol.gain.setTargetAtTime(newValue as number,context.context.currentTime, 0.01);
+    masterVol.gain.setTargetAtTime(
+      newValue as number,
+      context.context.currentTime,
+      0.01
+    );
   };
   const handleTrackTime = (event: any, newValue: number | number[]) => {
     setTrackTime(newValue as number);
-    audioSource.currentTime = newValue as number * audioSource.duration;
+    audioSource.currentTime = (newValue as number) * audioSource.duration;
   };
   const {
     handlePrev,
@@ -42,33 +47,46 @@ const Player: React.FC<Props> = (props: Props) => {
     handleNext,
     index,
     setIndex,
+    playing,
   } = props;
 
   useEffect(() => {
     audioSource.oncanplaythrough = () => {
       setLoading("");
+      if (playing) {
+        audioSource.play();
+      }
     };
     audioSource.onemptied = () => {
       setLoading("Loading...");
     };
     audioSource.onwaiting = () => {
-      setLoading("Waiting for data...")
-    }
+      setLoading("Waiting for data...");
+    };
     audioSource.onstalled = () => {
-      setLoading("Stalled...")
-    }
+      setLoading("Stalled...");
+    };
     audioSource.onerror = () => {
-      setLoading("ERROR...")
-    }
+      setLoading("ERROR...");
+    };
+  }, [
+    audioSource,
+    audioSource.oncanplaythrough,
+    playing,
+    audioSource.onemptied,
+    audioSource.onerror,
+    audioSource.onstalled,
+    audioSource.onwaiting,
+  ]);
+  useEffect(() => {
     const intervalId: NodeJS.Timeout = setInterval(() => {
       const currentTime = audioSource.currentTime / audioSource.duration;
       setTrackTime(currentTime);
     }, 1000);
     return () => {
       clearInterval(intervalId);
-    }
-  },[audioSource]);
-
+    };
+  }, [audioSource]);
   useEffect(() => {
     let animationId: number;
     let intervalId: NodeJS.Timeout;
@@ -110,7 +128,7 @@ const Player: React.FC<Props> = (props: Props) => {
   }, [context.analyser, audioSource.paused]);
 
   return (
-    <div className='player-container' ref={container} >
+    <div className="player-container" ref={container}>
       <canvas ref={canvas} />
       <PlayerIcons
         handlePrev={handlePrev}
@@ -119,26 +137,30 @@ const Player: React.FC<Props> = (props: Props) => {
         handleNext={handleNext}
       />
       <div className="slider">
-      <p className='loadingMsg'>{loading}</p>
+        <p className="loadingMsg">{loading}</p>
       </div>
       <div className="slider">
         <p>{renderTime(Math.round(audioSource.currentTime))}</p>
-        <Slider 
+        <Slider
           value={trackTime}
           onChange={handleTrackTime}
-          color='secondary'
-            aria-labelledby="continuous-slider"
-            min={0}
-            max={1}
-            step={0.01}
+          color="secondary"
+          aria-labelledby="continuous-slider"
+          min={0}
+          max={1}
+          step={0.01}
         />
-        <p>{audioSource.duration ? renderTime(Math.round(audioSource.duration)) : "0:00"}</p>
+        <p>
+          {audioSource.duration
+            ? renderTime(Math.round(audioSource.duration))
+            : "0:00"}
+        </p>
       </div>
       <div className="slider">
         <VolumeDown />
-        <Slider 
+        <Slider
           value={volume}
-          color='secondary'
+          color="secondary"
           aria-labelledby="continuous-slider"
           min={0}
           max={1}
@@ -147,10 +169,7 @@ const Player: React.FC<Props> = (props: Props) => {
         />
         <VolumeUp />
       </div>
-      <TrackList
-        index={index}
-        setIndex={setIndex}
-      />
+      <TrackList index={index} setIndex={setIndex} />
     </div>
   );
 };

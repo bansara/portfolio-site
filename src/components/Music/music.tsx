@@ -1,11 +1,6 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useContext
-} from "react";
-import { Context } from './context';
-import { ReactAudioContext } from '../../App'
+import React, { useState, useEffect, useCallback, useContext } from "react";
+import { Context } from "./context";
+import { ReactAudioContext } from "../../App";
 import Player from "./player";
 import { tracks } from "./tracks";
 import "./music.css";
@@ -26,7 +21,7 @@ const Music: React.FC = () => {
   }, [setIndex]);
   context.audioSource.onended = (): void => {
     handleNext();
-  }
+  };
   const handlePlay = (): void => {
     if (context.audioSource.paused) {
       context.audioSource.src = tracks[index].src;
@@ -78,10 +73,7 @@ const Music: React.FC = () => {
   useEffect(() => {
     context.audioSource.src = tracks[index].src;
     context.audioSource.load();
-    if (playing) {
-      context.audioSource.play();
-    }
-  }, [index, context.audioSource, playing]);
+  }, [index, context.audioSource]);
 
   // fade out audio when user navigates away
   useEffect(() => {
@@ -95,13 +87,14 @@ const Music: React.FC = () => {
   }, [context]);
 
   return (
-    <div className='music-container'>
+    <div className="music-container">
       <Player
         handlePrev={handlePrev}
         handlePlay={handlePlay}
         handlePause={handlePause}
         handleNext={handleNext}
         index={index}
+        playing={playing}
         setIndex={setIndex}
       />
     </div>
