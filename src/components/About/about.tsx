@@ -8,13 +8,17 @@ const About: React.FC = () => {
   const p: React.RefObject<HTMLParagraphElement> = useRef<HTMLParagraphElement>(
     null
   );
+  const p2: React.RefObject<HTMLParagraphElement> = useRef<HTMLParagraphElement>(
+    null
+  );
   const pSub: React.RefObject<HTMLParagraphElement> = useRef<HTMLParagraphElement>(
     null
   );
   useEffect(() => {
     window.scroll(0, 0);
-    if (p.current !== null && pSub.current !== null) {
+    if (p.current !== null && pSub.current !== null && p2.current !== null) {
       p.current.classList.remove("transparent");
+      p2.current.classList.remove("transparent");
       pSub.current.classList.remove("transparent");
     }
   }, []);
@@ -37,7 +41,7 @@ const About: React.FC = () => {
           touring, and transitioning to software engineering was the natural
           choice, so I enrolled in Fullstack Academy.
         </p>
-        <p>
+        <p className="bio transparent" ref={p2}>
           Achieving success as a musician took years of hard work, passion,
           discipline, and perseverance. I have focused these same character
           traits on becoming the best software engineer I can be. I am fluent in
