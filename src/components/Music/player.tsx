@@ -36,6 +36,7 @@ const Player: React.FC<Props> = (props: Props) => {
       0.01
     );
   };
+
   const handleTrackTime = (event: any, newValue: number | number[]) => {
     setTrackTime(newValue as number);
     audioSource.currentTime = (newValue as number) * audioSource.duration;
@@ -64,7 +65,7 @@ const Player: React.FC<Props> = (props: Props) => {
       setLoading("Waiting for data...");
     };
     audioSource.onstalled = () => {
-      setLoading("Stalled...");
+      setLoading("Stalled...Waiting for data");
     };
     audioSource.onerror = () => {
       setLoading("ERROR...");
