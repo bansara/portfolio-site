@@ -13,8 +13,8 @@ const pedalboard: ProjectInfo = {
   youtubeLink: "https://www.youtube.com/embed/ejlRMCp0X0M",
 };
 
-const poopyLoops: ProjectInfo = {
-  headline: "PoopyLoops",
+const buddyLoops: ProjectInfo = {
+  headline: "BuddyLoops",
   technologies: [
     "React",
     "Typescript",
@@ -23,9 +23,9 @@ const poopyLoops: ProjectInfo = {
     "Socket IO",
   ],
   description:
-    "PoopyLoops is a real-time, collaborative, loop-based, musical instrument made to enable easy musical collaboration over the internet during the pandemic era. This project is an ongoing work in progress that is being continually updated.",
-  deployLink: "http://poopyloops.com/",
-  githubLink: "http://poopyloops.com/",
+    "BuddyLoops is a real-time, collaborative, loop-based, musical instrument made to enable easy musical collaboration over the internet during the pandemic era. This project is an ongoing work in progress that is being continually updated.",
+  deployLink: "https://buddyloops.com/",
+  githubLink: "https://buddyloops.com/",
   hasVideo: false,
   img: poop,
 };
@@ -61,4 +61,4 @@ const graceShopper: ProjectInfo = {
   img: grace,
 };
 
-export const projects = [pedalboard, poopyLoops, skrap, graceShopper];
+export const projects = [pedalboard, buddyLoops, skrap, graceShopper];
