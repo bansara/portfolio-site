@@ -61,4 +61,4 @@ const graceShopper: ProjectInfo = {
   img: grace,
 };
 
-export const projects = [pedalboard, buddyLoops, skrap, graceShopper];
+export const projects = [buddyLoops, pedalboard, skrap, graceShopper];
