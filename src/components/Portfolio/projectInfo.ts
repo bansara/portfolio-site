@@ -1,6 +1,6 @@
 import { ProjectInfo } from "./projectInfoInterface";
 import grace from "./graceShopper.png";
-import poop from "./poopyLoops.png";
+import buddy from "./buddyLoops.png";
 
 const pedalboard: ProjectInfo = {
   headline: "Pedalboard JS",
@@ -27,7 +27,7 @@ const buddyLoops: ProjectInfo = {
   deployLink: "https://buddyloops.com/",
   githubLink: "https://buddyloops.com/",
   hasVideo: false,
-  img: poop,
+  img: buddy,
 };
 
 const skrap: ProjectInfo = {
