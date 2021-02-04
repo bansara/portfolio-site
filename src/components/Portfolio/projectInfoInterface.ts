@@ -3,8 +3,9 @@ export interface ProjectInfo {
   technologies: string[];
   description: string;
   deployLink: string;
-  githubLink: string;
+  githubLink?: string;
   hasVideo: boolean;
+  hasGithub: boolean;
   youtubeLink?: string;
   img?: string;
 }
@@ -14,7 +15,8 @@ export interface Info {
   technologies: string[];
   description: string;
   deployLink: string;
-  githubLink: string;
+  hasGithub: boolean;
+  githubLink: string | undefined;
 }
 
 export interface VisualInfo {

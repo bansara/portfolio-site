@@ -21,6 +21,7 @@ const PortfolioProject: React.FC<Props> = (props: Props) => {
       description,
       deployLink,
       githubLink,
+      hasGithub,
       hasVideo,
       youtubeLink,
       img,
@@ -36,6 +37,7 @@ const PortfolioProject: React.FC<Props> = (props: Props) => {
     description,
     deployLink,
     githubLink,
+    hasGithub,
   };
 
   const visualInfo: VisualInfo = {
@@ -72,7 +74,7 @@ const PortfolioProject: React.FC<Props> = (props: Props) => {
   };
 
   return (
-    <div className='portfolio' ref={div}>
+    <div className="portfolio" ref={div}>
       {variant === "left" ? (
         <>
           <ProjectInfoPanel info={info} />
@@ -85,16 +87,16 @@ const PortfolioProject: React.FC<Props> = (props: Props) => {
         </>
       )}
       {hasPrev && (
-        <div className='prev'>
-          <Button onClick={handlePrev} variant='outlined' color='primary'>
+        <div className="prev">
+          <Button onClick={handlePrev} variant="outlined" color="primary">
             prev&nbsp;
             <ExpandLessIcon />
           </Button>
         </div>
       )}
       {hasNext && (
-        <div className='next'>
-          <Button onClick={handleNext} variant='outlined' color='primary'>
+        <div className="next">
+          <Button onClick={handleNext} variant="outlined" color="primary">
             next&nbsp;
             <ExpandMoreIcon />
           </Button>
