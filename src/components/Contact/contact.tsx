@@ -119,7 +119,7 @@ const Contact: React.FC = () => {
       <div className="contact-wrapper">
         <div className="contact-text">
           <h1>Let's talk.</h1>
-          <h2>
+          <h2 style={{ color: "var(--blue)" }}>
             I'm currently accepting offers for full-time, contract, and
             freelance work.
           </h2>

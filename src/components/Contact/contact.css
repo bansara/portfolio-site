@@ -93,11 +93,15 @@ p.error {
   color: var(--white);
   padding: 1em;
 }
-@media screen and (max-width: 768px) {
+
+@media screen and (max-width: 1024px) {
   .contact-container {
     max-width: 90%;
   }
   .contact-container textarea {
+    width: 500px;
+  }
+  .contact-text {
     width: 500px;
   }
   .contact-wrapper {
@@ -105,11 +109,14 @@ p.error {
     align-items: center;
     max-width: 90%;
   }
-  .contact-text {
-    width: 90%;
-  }
 }
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 600px) {
+  .contact-text {
+    width: 300px;
+  }
+  .contact-text h2 {
+    font-size: 1.5rem;
+  }
   .contact-container textarea {
     width: 300px;
   }
