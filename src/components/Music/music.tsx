@@ -88,6 +88,16 @@ const Music: React.FC = () => {
 
   return (
     <div className="music-container">
+      <div className="music-info">
+        <h1>Mind of an engineer</h1>
+        <h2 style={{ color: "var(--blue)" }}>Soul of an artist</h2>
+        <p>
+          Before transitioning to programming, I had a successful career as a
+          musician, performing 2650 shows in 45 cities around the world with
+          Cirque du Soleil, where I was the bandleader for the show "TOTEM".
+        </p>
+        <p>Have a listen to some music from my project "Bansara".</p>
+      </div>
       <Player
         handlePrev={handlePrev}
         handlePlay={handlePlay}

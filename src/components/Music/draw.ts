@@ -1,7 +1,7 @@
 export const draw = function (
   canvasCtx: CanvasRenderingContext2D | null,
-  height: number | null,
-  width: number | null,
+  height: number | null | undefined,
+  width: number | null | undefined,
   analyser: AnalyserNode,
   dataArray: Uint8Array,
   bufferLength: number,
