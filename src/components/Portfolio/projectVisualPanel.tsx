@@ -10,20 +10,20 @@ const ProjectVisualPanel: React.FC<Props> = (props: Props) => {
     visualInfo: { hasVideo, deployLink, headline, youtubeLink, img },
   } = props;
   return (
-    <div className='video'>
+    <div className="video">
       {hasVideo ? (
         <iframe
           src={youtubeLink}
           title={`${headline} demo video`}
-          frameBorder='0'
-          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
         />
       ) : (
         <a
           href={deployLink}
-          target='_blank'
-          rel='noopener noreferrer'
+          target="_blank"
+          rel="noopener noreferrer"
           title={headline}
         >
           <img src={img} alt={`${headline} demo`} />

@@ -1,5 +1,5 @@
 import { ProjectInfo } from "./projectInfoInterface";
-import buddy from "./buddyLoops.png";
+import buddy from "./buddyLoops.jpg";
 
 const pedalboard: ProjectInfo = {
   headline: "Pedalboard JS",

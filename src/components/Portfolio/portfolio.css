@@ -34,6 +34,8 @@
   padding: 0 2rem;
   width: 50%;
   box-sizing: border-box;
+  transition: 500ms all ease-out;
+  will-change: transform opacity;
 }
 .info a:hover {
   color: var(--green);
@@ -78,6 +80,10 @@
   justify-content: center;
   width: calc(100vw - 4em);
   top: 2rem;
+}
+.down {
+  opacity: 0;
+  transform: translateY(200px);
 }
 @media screen and (max-width: 1024px) {
   .portfolio {

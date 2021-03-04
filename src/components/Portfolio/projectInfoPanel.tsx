@@ -20,7 +20,7 @@ const ProjectInfoPanel: React.FC<Props> = (props: Props) => {
   } = props;
 
   return (
-    <div className="info">
+    <div className="info down">
       <h2>{headline}</h2>
       <h4>{technologies.join(" • ")}</h4>
       <a
